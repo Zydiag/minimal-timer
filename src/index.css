@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Poppins;
+  height: 100vh;
+  background: #393939;
+  color: white;
+}
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#timer-box {
+  font-size: 96px;
+}
+#counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 144px;
+  transition: 0.5s ease;
+}
+.container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container span {
+  width: 60px;
+}
+.colon {
+  margin: 0px 10px;
+  vertical-align: middle !important;
+  width: 20px !important;
+  height: fit-content;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 75px;
+  height: 102px;
+}
+.plus {
+  height: 50%;
+  cursor: pointer;
+}
+.play-pause {
+  height: 100%;
+  cursor: pointer;
+}
+
+.minus {
+  height: 50%;
+  cursor: pointer;
+}
