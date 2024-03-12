@@ -21,6 +21,11 @@ const Timer = ({ mode }: { mode: any }) => {
       setMinutes((min) => min + 5);
     }
   };
+  const resetTimer = () => {
+    setSeconds(0);
+    setMinutes(0);
+    setHours(0);
+  };
 
   function checkLimit() {
     console.log(seconds);
@@ -66,7 +71,7 @@ const Timer = ({ mode }: { mode: any }) => {
     }
 
     return () => clearInterval(interval);
-  }, [timerStarted, seconds]);
+  }, [timerStarted, seconds, mode]);
 
   const [seconds1, seconds2] = seconds.toString().padStart(2, "0").split("");
   const [min1, min2] = minutes.toString().padStart(2, "0").split("");
@@ -91,7 +96,16 @@ const Timer = ({ mode }: { mode: any }) => {
           src={!timerStarted ? Play : Pause}
           className="play-pause"
           alt=""
-          onClick={() => setTimerStarted((prev) => !prev)}
+          onClick={() => {
+            if (timerStarted) {
+              setTimerStarted(false);
+            } else {
+              setTimerStarted(true);
+              if (mode === "StopWatch") {
+                resetTimer();
+              }
+            }
+          }}
         />
         <img src={Plus} className="plus" alt="" onClick={handlePlusClick} />
       </div>
