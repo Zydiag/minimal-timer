@@ -4,14 +4,23 @@ import Pause from "../../Icon/Outline/pause.svg";
 import Minus from "../../Icon/Outline/minus-circle.svg";
 import Plus from "../../Icon/Outline/plus-circle.svg";
 
-type MODE = "Timer" | "StopWatch";
-
-const Timer = () => {
-  const [seconds, setSeconds] = useState(50);
+const Timer = ({ mode }: { mode: any }) => {
+  const [seconds, setSeconds] = useState(5);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
   const [timerStarted, setTimerStarted] = useState(false);
-  const [mode, setMode] = useState<MODE>("Timer");
+
+  const handleMinusClick = () => {
+    if (mode === "Timer") {
+      setMinutes((min) => Math.max(0, min - 5));
+    }
+  };
+
+  const handlePlusClick = () => {
+    if (mode === "Timer") {
+      setMinutes((min) => min + 5);
+    }
+  };
 
   function checkLimit() {
     console.log(seconds);
@@ -26,23 +35,33 @@ const Timer = () => {
     }
     if (seconds < 0) {
       setMinutes((min) => min - 1);
-      setSeconds(60);
+      setSeconds(59);
     }
     if (minutes < 0) {
       setHours((hr) => hr - 1);
-      setMinutes(60);
+      setMinutes(59);
     }
     if (hours < 0) {
       setTimerStarted(false);
     }
   }
+
   useEffect(() => {
     let interval: number;
 
     checkLimit();
     if (timerStarted) {
       interval = setInterval(() => {
-        setSeconds((sec) => sec + 1);
+        if (mode === "Timer") {
+          if (seconds === 0 && minutes === 0 && hours === 0) {
+            setTimerStarted(false);
+            clearInterval(interval);
+            return;
+          }
+          setSeconds((sec) => sec - 1);
+        } else {
+          setSeconds((sec) => sec + 1);
+        }
       }, 1000);
     }
 
@@ -67,14 +86,14 @@ const Timer = () => {
         </div>
       </div>
       <div className="buttons">
-        <img src={Minus} className="minus" alt="" />
+        <img src={Minus} className="minus" alt="" onClick={handleMinusClick} />
         <img
           src={!timerStarted ? Play : Pause}
           className="play-pause"
           alt=""
           onClick={() => setTimerStarted((prev) => !prev)}
         />
-        <img src={Plus} className="plus" alt="" />
+        <img src={Plus} className="plus" alt="" onClick={handlePlusClick} />
       </div>
     </div>
   );
